@@ -9,21 +9,25 @@ passport.serializeUser(function (user, done) {
 
 passport.deserializeUser(function (id, done) {
     const usersController = new UsersController();
-    usersController.findUserById(id, function (error, user) {
-        return done(error, user);
-    });
+    usersController.findUserById(id)
+        .then((user) => {
+            if (user != undefined) { return done(null, user) } else { return done(err, null) }
+        }).catch((err) => { return done(err, null) });
 });
 
 passport.use(new LocalStrategy(
     function (username, password, done) {
         var credentials = { user_email: username, password: password };
         const usersController = new UsersController();
-        usersController.authenticateUser(credentials, function (error, user) {
-            if (error) {
-                return done(error);
-            }
-            console.log("Logged in User: " + JSON.stringify(user));
-            return done(null, user);
-        });
+        usersController.authenticateUser(credentials)
+            .then((user) => {
+                if (user != undefined) {
+                    return done(null, user);
+                } else {
+                    return done(null, false);
+                }
+            }).catch((err) => {
+                return done(err);
+            });
     }
 ));

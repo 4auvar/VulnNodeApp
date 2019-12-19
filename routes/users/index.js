@@ -7,4 +7,8 @@ router.get('/', userSession.isAuthenticated, user.renderDashboard);
 
 router.post('/', user.authenticate);
 
+router.get('/error-based-sqli', userSession.isAuthenticated, user.ErrorBasedSqli);
+
+router.post('/update-profile', userSession.isAuthenticated, user.updateProfile);
+
 module.exports = router;

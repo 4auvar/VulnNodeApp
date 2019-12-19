@@ -9,8 +9,33 @@ var pool = mysql.createPool({
     database: config.DATABASE_NAME
 });
 
-function executeQueryWithParam(query, parameter, callback) {
-    pool.query(query, parameter, callback);
+function executeQueryWithParam(query, parameters, callback) {
+    return new Promise((resolve, reject) => {
+        pool.query(query, parameters, (err, res) => {
+            if (err) {
+                return reject(err);
+            } else {
+                resolve(res);
+            }
+        });
+    });
 }
 
-module.exports = executeQueryWithParam;
+function executeQuery(query) {
+    return new Promise((resolve, reject) => {
+        pool.query(query, (err, res) => {
+            if (err) {
+                return reject(err);
+            } else {
+                return resolve(res);
+            }
+        });
+    });
+
+
+}
+
+module.exports = {
+    executeQueryWithParam: executeQueryWithParam,
+    executeQuery: executeQuery
+};
