@@ -1,4 +1,5 @@
 var UsersModel = require("../models/usersModel");
+const { custom_sanitizer_regex, isFromBlackList } = require('../utils/custome_validation');
 
 class UsersController {
     constructor() {
@@ -38,6 +39,52 @@ class UsersController {
                 });
         });
     }
+
+    searchByName(username) {
+        return new Promise((resolve, reject) => {
+            this.usersModel.searchByName([username])
+                .then((user) => {
+                    let htmlResponse = "";
+                    if (user != undefined && user != "") {
+                        htmlResponse = generateSearchUserResponse(user)
+                    } else {
+                        htmlResponse = "<p>User " + custom_sanitizer_regex(username) + " not present";
+                    }
+
+                    return resolve(htmlResponse);
+                })
+                .catch((err) => {
+                    return reject(err);
+                });
+        });
+    }
 }
 
 module.exports = UsersController;
+
+
+
+function generateSearchUserResponse(user) {
+    var resString = "<table border='1'>";
+    resString += "<tr><th>User Id</th>";
+    resString += "<th>Full Name</th>";
+    resString += "<th>User Name</th>";
+    resString += "<th>Email</th>";
+    resString += "<th>Phone</th>";
+    resString += "</tr>";
+
+    for (i = 0; i < user.length; i++) {
+        resString += "<tr> ";
+        resString += "<td>" + user[i].id + "</td> ";
+        resString += "<td>" + (isFromBlackList(user[i].fullname) ? "" : user[i].fullname) + "</td> ";
+        resString += "<td>" + (isFromBlackList(user[i].username) ? "" : user[i].username) + "</td> ";
+        resString += "<td>" + (isFromBlackList(user[i].email) ? "" : user[i].email) + "</td> ";
+        resString += "<td>" + (isFromBlackList(user[i].phone) ? "" : user[i].phone) + "</td> ";
+
+
+        resString += "</tr> ";
+    }
+    resString += "</table>";
+
+    return resString;
+}

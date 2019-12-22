@@ -26,9 +26,20 @@ class UsersModel {
         let id = parameters[1];
         return new Promise((resolve, reject) => {
             let query = queries.updateUserById;
-            console.log("query : " + query);
             executeQueryWithParam(query, [user.fullname, user.username, user.email, user.phone, id]).then((result) => {
-                console.log("success");
+                resolve(result);
+            }).catch((err) => {
+                console.log("error : " + err);
+                reject(err);
+            });
+        });
+    }
+
+    searchByName(parameters) {
+        let username = parameters[0];
+        return new Promise((resolve, reject) => {
+            let query = "select id,username,email,fullname,phone from users where username like '%" + username + "%';";
+            executeQuery(query).then((result) => {
                 resolve(result);
             }).catch((err) => {
                 console.log("error : " + err);

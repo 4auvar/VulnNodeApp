@@ -23,13 +23,13 @@ module.exports = {
     renderDashboard: function (req, res, next) {
         return renderDashboard(req, res);
     },
-    ErrorBasedSqli: function (req, res, next) {
+    errorBasedSqli: function (req, res, next) {
         getUser(req.query.id)
             .then((user) => {
                 if (user != undefined) {
-                    return res.render('../views/error-based-sqli', { id: req.user.id, fullName: req.user.fullname, errorMessage: "", userDetails: user });
+                    return res.render('../views/error-based-sqli', { id: req.user.id, fullName: req.user.fullname, userDetails: user });
                 } else {
-                    return res.render('../views/error-based-sqli', { id: req.user.id, fullName: req.user.fullname, errorMessage: "", userDetails: undefined });
+                    return res.render('../views/error-based-sqli', { id: req.user.id, fullName: req.user.fullname, userDetails: undefined });
                 }
             }).catch((err) => {
                 return res.send(err);
@@ -40,11 +40,25 @@ module.exports = {
         console.log("user.id : " + req.query.id);
         usersController.updateUserById(req.body, req.query.id)
             .then(() => {
-                res.redirect("/error-based-sqli?id=" + req.query.id)
+                res.redirect("/error-based-sqli?id=" + req.query.id + "&default=English")
             }).catch((err) => {
                 return res.send(err);
             });
     },
+    blindSqli: function (req, res) {
+        return res.render('../views/blind-sqli', { id: req.user.id, fullName: req.user.fullname, isGetReq: true, htmlResponse: "" });
+    },
+    searchUser: function (req, res) {
+        const usersController = new UsersController();
+        // test1%' or '%'='
+        usersController.searchByName(req.body.username)
+            .then((htmlResponse) => {
+                return res.render('../views/blind-sqli', { id: req.user.id, fullName: req.user.fullname, isGetReq: false, htmlResponse: htmlResponse });
+            }).catch((err) => {
+                console.log("err : " + err);
+                return res.render('../views/blind-sqli', { id: req.user.id, fullName: req.user.fullname, isGetReq: false, htmlResponse: "" });
+            });
+    }
 }
 
 function renderDashboard(req, res) {
@@ -55,3 +69,4 @@ function getUser(id) {
     const usersController = new UsersController();
     return usersController.findUserById(id);
 }
+
