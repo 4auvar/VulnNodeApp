@@ -21,4 +21,8 @@ router.post('/blind-sqli', userSession.isAuthenticated, user.searchUser);
 
 router.get('/second-order-sqli', userSession.isAuthenticated, user.viewSecondOrderSqli);
 
+router.get('/blind-sqli-blacklist', userSession.isAuthenticated, user.blindSqliBlackList);
+
+router.post('/blind-sqli-blacklist', userSession.isAuthenticated, user.searchUserBlackList);
+
 module.exports = router;

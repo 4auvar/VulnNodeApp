@@ -83,7 +83,21 @@ module.exports = {
             console.log("err : " + err);
             return res.render('../views/second-order-sqli', { id: req.user.id, fullName: req.user.fullname, isGetReq: false, htmlResponse: "" });
         });
-    }
+    },
+    blindSqliBlackList: function (req, res) {
+        return res.render('../views/blind-sqli-blacklist', { id: req.user.id, fullName: req.user.fullname, isGetReq: true, htmlResponse: "" });
+    },
+    searchUserBlackList: function (req, res) {
+        const usersController = new UsersController();
+        // test1%' or '%'='
+        usersController.searchUserBlackList(req.body.username)
+            .then((htmlResponse) => {
+                return res.render('../views/blind-sqli-blacklist', { id: req.user.id, fullName: req.user.fullname, isGetReq: false, htmlResponse: htmlResponse });
+            }).catch((err) => {
+                console.log("err : " + err);
+                return res.render('../views/blind-sqli-blacklist', { id: req.user.id, fullName: req.user.fullname, isGetReq: false, htmlResponse: "" });
+            });
+    },
 }
 
 function renderDashboard(req, res) {

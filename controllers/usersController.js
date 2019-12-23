@@ -1,5 +1,5 @@
 var UsersModel = require("../models/usersModel");
-const { custom_sanitizer_regex, isFromBlackList } = require('../utils/custome_validation');
+const { custom_sanitizer_regex, isFromBlackListOfXSS, isFromBlackListOfSqli } = require('../utils/custome_validation');
 
 class UsersController {
     constructor() {
@@ -74,6 +74,32 @@ class UsersController {
             }
         });
     }
+
+    searchUserBlackList(username) {
+        console.log("username :" + username);
+        return new Promise((resolve, reject) => {
+            let htmlResponse = "";
+            if (!isFromBlackListOfSqli(username)) {
+                this.usersModel.searchByName([username])
+                    .then((user) => {
+                        if (user != undefined && user != "") {
+                            htmlResponse = generateSearchUserResponse(user)
+                        } else {
+                            htmlResponse = "<p>User " + username + " not present";
+                        }
+
+                        return resolve(htmlResponse);
+                    })
+                    .catch((err) => {
+                        return reject(err);
+                    });
+            } else {
+                console.log("Here in else");
+                htmlResponse = "<p>Your input contains malicious values, Please try again</p>";
+                return resolve(htmlResponse);
+            }
+        });
+    }
 }
 
 module.exports = UsersController;
@@ -92,10 +118,10 @@ function generateSearchUserResponse(user) {
     for (i = 0; i < user.length; i++) {
         resString += "<tr> ";
         resString += "<td>" + user[i].id + "</td> ";
-        resString += "<td>" + (isFromBlackList(user[i].fullname) ? "" : user[i].fullname) + "</td> ";
-        resString += "<td>" + (isFromBlackList(user[i].username) ? "" : user[i].username) + "</td> ";
-        resString += "<td>" + (isFromBlackList(user[i].email) ? "" : user[i].email) + "</td> ";
-        resString += "<td>" + (isFromBlackList(user[i].phone) ? "" : user[i].phone) + "</td> ";
+        resString += "<td>" + (isFromBlackListOfXSS(user[i].fullname) ? "" : user[i].fullname) + "</td> ";
+        resString += "<td>" + (isFromBlackListOfXSS(user[i].username) ? "" : user[i].username) + "</td> ";
+        resString += "<td>" + (isFromBlackListOfXSS(user[i].email) ? "" : user[i].email) + "</td> ";
+        resString += "<td>" + (isFromBlackListOfXSS(user[i].phone) ? "" : user[i].phone) + "</td> ";
 
 
         resString += "</tr> ";

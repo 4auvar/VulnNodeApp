@@ -8,11 +8,11 @@ function custom_sanitizer_regex(user_input) {
      */
 
     let p = "<(\\w+)\\W+[\\w]";
-    return user_input.replace(new RegExp(p),"")    
+    return user_input.replace(new RegExp(p), "")
 }
 
-function isFromBlackList(user_input) {
-    
+function isFromBlackListOfXSS(user_input) {
+
     blackList = [/href/, /<img/, /<script>/, /<\/script>/, /onload/, /<div/, /<meta/, /<a/,
         /onclick/, /<svg/, /<embed/, /<body/, /<article/, /<audio/, /<canvas/, /<iframe/, /<link/, /<object/,
         /<style/, /<span/, /<input/, /<table/, /<tr/, /<td/, /<title/, /<video/]
@@ -33,7 +33,32 @@ function isFromBlackList(user_input) {
         return false;
 }
 
+function isFromBlackListOfSqli(user_input) {
+
+    blackList = [/--/, /;/, /or/, /and/, /@@/, /@/, /char/, /nchar/, /varchar/, /nvarchar/,
+        /table/, /alter/, /begin/, /cast/, /create/, /cursor/, /declare/, /delete/, /drop/, /end/, /exec/,
+        /union/, /execute/, /fetch/, /select/, /insert/, /kill/, /open/, /sys/, /sysobjects/, /syscolumns/,
+        /update/]
+
+    let flag = 0;
+    
+    console.log("isFromBlackListOfSqli : " + user_input);
+    for (let i = 0; i < blackList.length; i++) {
+        let pattern = blackList[i];
+
+        if (pattern.test(user_input)) {
+            flag = 1;
+            break;
+        }
+    }
+    if (flag == 1)
+        return true;
+    else
+        return false;
+}
+
 module.exports = {
     custom_sanitizer_regex: custom_sanitizer_regex,
-    isFromBlackList: isFromBlackList
+    isFromBlackListOfXSS: isFromBlackListOfXSS,
+    isFromBlackListOfSqli: isFromBlackListOfSqli
 };
