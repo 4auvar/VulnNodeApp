@@ -25,7 +25,7 @@ app.use(session({
   secret: 'secrettobechanged',
   resave: true,
   saveUninitialized: true,
-  cookie: { secure: false }
+  cookie: { httpOnly: false, secure: false }
 }))
 
 app.use(passport.initialize());

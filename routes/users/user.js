@@ -15,21 +15,22 @@ module.exports = {
                         return res.render("index", { message: "Invalid username or password!!" });
                     }
                     req.session.ROLE = user.role_id;
-                    return renderDashboard(req, res);
+                    console.log("req.user : " + JSON.stringify(req.user));
+                    return renderDashboardView(req, res);
                 });
             }
         })(req, res, next);
     },
     renderDashboard: function (req, res, next) {
-        return renderDashboard(req, res);
+        return renderDashboardView(req, res);
     },
     errorBasedSqli: function (req, res, next) {
         getUser(req.query.id)
             .then((user) => {
                 if (user != undefined) {
-                    return res.render('../views/error-based-sqli', { id: req.user.id, fullName: req.user.fullname, userDetails: user });
+                    return res.render('../views/error-based-sqli', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, userDetails: user });
                 } else {
-                    return res.render('../views/error-based-sqli', { id: req.user.id, fullName: req.user.fullname, userDetails: undefined });
+                    return res.render('../views/error-based-sqli', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, userDetails: undefined });
                 }
             }).catch((err) => {
                 return res.send(err);
@@ -46,17 +47,17 @@ module.exports = {
             });
     },
     blindSqli: function (req, res) {
-        return res.render('../views/blind-sqli', { id: req.user.id, fullName: req.user.fullname, isGetReq: true, htmlResponse: "" });
+        return res.render('../views/blind-sqli', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, isGetReq: true, htmlResponse: "" });
     },
     searchUser: function (req, res) {
         const usersController = new UsersController();
         // test1%' or '%'='
         usersController.searchByName(req.body.username)
             .then((htmlResponse) => {
-                return res.render('../views/blind-sqli', { id: req.user.id, fullName: req.user.fullname, isGetReq: false, htmlResponse: htmlResponse });
+                return res.render('../views/blind-sqli', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, isGetReq: false, htmlResponse: htmlResponse });
             }).catch((err) => {
                 console.log("err : " + err);
-                return res.render('../views/blind-sqli', { id: req.user.id, fullName: req.user.fullname, isGetReq: false, htmlResponse: "" });
+                return res.render('../views/blind-sqli', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, isGetReq: false, htmlResponse: "" });
             });
     },
     viewRegister: function (req, res) {
@@ -77,31 +78,35 @@ module.exports = {
         const usersController = new UsersController();
         // test1%' or '%'='   
         usersController.searchByName(req.user.username)
-        .then((htmlResponse) => {
-            return res.render('../views/second-order-sqli', { id: req.user.id, fullName: req.user.fullname, isGetReq: false, htmlResponse: htmlResponse });
-        }).catch((err) => {
-            console.log("err : " + err);
-            return res.render('../views/second-order-sqli', { id: req.user.id, fullName: req.user.fullname, isGetReq: false, htmlResponse: "" });
-        });
+            .then((htmlResponse) => {
+                return res.render('../views/second-order-sqli', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, isGetReq: false, htmlResponse: htmlResponse });
+            }).catch((err) => {
+                console.log("err : " + err);
+                return res.render('../views/second-order-sqli', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, isGetReq: false, htmlResponse: "" });
+            });
     },
     blindSqliBlackList: function (req, res) {
-        return res.render('../views/blind-sqli-blacklist', { id: req.user.id, fullName: req.user.fullname, isGetReq: true, htmlResponse: "" });
+        return res.render('../views/blind-sqli-blacklist', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, isGetReq: true, htmlResponse: "" });
     },
     searchUserBlackList: function (req, res) {
         const usersController = new UsersController();
         // test1%' or '%'='
         usersController.searchUserBlackList(req.body.username)
             .then((htmlResponse) => {
-                return res.render('../views/blind-sqli-blacklist', { id: req.user.id, fullName: req.user.fullname, isGetReq: false, htmlResponse: htmlResponse });
+                return res.render('../views/blind-sqli-blacklist', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, isGetReq: false, htmlResponse: htmlResponse });
             }).catch((err) => {
                 console.log("err : " + err);
-                return res.render('../views/blind-sqli-blacklist', { id: req.user.id, fullName: req.user.fullname, isGetReq: false, htmlResponse: "" });
+                return res.render('../views/blind-sqli-blacklist', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, isGetReq: false, htmlResponse: "" });
             });
     },
+    // logout : function(req,res){
+    //     //req.logout();
+    //     res.redirect('/');
+    // }
 }
 
-function renderDashboard(req, res) {
-    return res.render('../views/dashboard', { id: req.user.id, fullName: req.user.fullname });
+function renderDashboardView(req, res) {
+    return res.render('../views/dashboard', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic });
 }
 
 function getUser(id) {

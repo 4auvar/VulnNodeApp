@@ -66,7 +66,7 @@ class UsersModel {
 
 const queries = {
     updateUserById: "update users set fullname=?, username=?, email=?, phone=? where id=?",
-    addUser: "insert into users (fullname,username,email,phone,password) values(?,?,?,?,?)"
+    addUser: "insert into users (fullname,username,email,phone,password,profilepic) values(?,?,?,?,?,'/images/user2-160x160.jpg')"
 }
 
 module.exports = UsersModel;

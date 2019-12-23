@@ -41,12 +41,46 @@
         </div>
     </form>
 
-    <!-- TODO:: Change working of Right navbar links for menus -->
-    <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-            <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#">
-                <i class="fas fa-th-large"></i>
+
+    <div class="navbar-custom-menu" bis_skin_checked="1"></div>
+    <ul class="nav navbar-nav ml-auto">
+        <!-- User Account: style can be found in dropdown.less -->
+        <li class="dropdown user user-menu open">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                <img src="<%= profilePic %>" class="user-image" alt="User Image">
+                <span class="hidden-xs"><%- fullName %></span>
             </a>
+            <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                <!-- User image -->
+                <li class="user-header">
+                    <img src="<%= profilePic %>" class="img-circle" alt="User Image">
+
+                    <p>
+                        <%- fullName %>
+                    </p>
+                </li>
+                <!-- Menu Footer-->
+                <li class="user-footer">
+                    <div class="pull-left" bis_skin_checked="1">
+
+                        <a href="./error-based-sqli?id=<%= id %>&default=English"
+                            class="btn btn-primary">Profile</button>
+                            <a href="#" id="logout" class="btn btn-secondary float-right">Logout</a>
+                    </div>
+                    <div class="pull-right" bis_skin_checked="1">
+                    </div>
+                </li>
+            </ul>
         </li>
     </ul>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" type="text/javascript"></script>
+    <script>
+        $('#logout').click(function (e) {
+            e.preventDefault(); 
+            document.cookie = "connect.sid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            window.location = "/";
+            return false;
+        });
+    </script>
 </nav>
