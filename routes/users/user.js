@@ -58,6 +58,31 @@ module.exports = {
                 console.log("err : " + err);
                 return res.render('../views/blind-sqli', { id: req.user.id, fullName: req.user.fullname, isGetReq: false, htmlResponse: "" });
             });
+    },
+    viewRegister: function (req, res) {
+        return res.render('../views/register', { errorMessage: "" });
+    },
+    registerUser: function (req, res) {
+        const usersController = new UsersController();
+        // test1%' or '%'='
+        usersController.registerUser(req.body)
+            .then(() => {
+                return res.redirect('/');
+            }).catch((err) => {
+                console.log("err : " + err);
+                return res.render('../views/register', { errorMessage: "Error: Please try again" });
+            });
+    },
+    viewSecondOrderSqli: function (req, res) {
+        const usersController = new UsersController();
+        // test1%' or '%'='   
+        usersController.searchByName(req.user.username)
+        .then((htmlResponse) => {
+            return res.render('../views/second-order-sqli', { id: req.user.id, fullName: req.user.fullname, isGetReq: false, htmlResponse: htmlResponse });
+        }).catch((err) => {
+            console.log("err : " + err);
+            return res.render('../views/second-order-sqli', { id: req.user.id, fullName: req.user.fullname, isGetReq: false, htmlResponse: "" });
+        });
     }
 }
 

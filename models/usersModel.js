@@ -39,8 +39,23 @@ class UsersModel {
         let username = parameters[0];
         return new Promise((resolve, reject) => {
             let query = "select id,username,email,fullname,phone from users where username like '%" + username + "%';";
+
+            console.log("query : " + query);
             executeQuery(query).then((result) => {
                 resolve(result);
+            }).catch((err) => {
+                console.log("error : " + err);
+                reject(err);
+            });
+        });
+    }
+
+    registerUser(user) {
+        user = user[0];
+        return new Promise((resolve, reject) => {
+            let query = queries.addUser;
+            executeQueryWithParam(query, [user.fullname, user.username, user.email, user.phone, user.password]).then((result) => {
+                resolve();
             }).catch((err) => {
                 console.log("error : " + err);
                 reject(err);
@@ -50,7 +65,8 @@ class UsersModel {
 }
 
 const queries = {
-    updateUserById: "update users set fullname=?, username=?, email=?, phone=? where id=?"
+    updateUserById: "update users set fullname=?, username=?, email=?, phone=? where id=?",
+    addUser: "insert into users (fullname,username,email,phone,password) values(?,?,?,?,?)"
 }
 
 module.exports = UsersModel;

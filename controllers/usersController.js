@@ -58,6 +58,22 @@ class UsersController {
                 });
         });
     }
+
+    registerUser(user) {
+        return new Promise((resolve, reject) => {
+            if (user.password == user.cpassword) {
+                this.usersModel.registerUser([user])
+                    .then(() => {
+                        resolve();
+                    })
+                    .catch((err) => {
+                        reject(err);
+                    });
+            } else {
+                reject(new Error("Password does not match to each other"));
+            }
+        });
+    }
 }
 
 module.exports = UsersController;
