@@ -22,10 +22,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
-  secret: "secrettobechanged",
-  saveUninitialized: false,
-  resave: true
-}));
+  secret: 'secrettobechanged',
+  resave: true,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}))
 
 app.use(passport.initialize());
 app.use(passport.session());
