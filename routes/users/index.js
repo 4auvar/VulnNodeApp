@@ -25,6 +25,8 @@ router.get('/blind-sqli-blacklist', userSession.isAuthenticated, user.blindSqliB
 
 router.post('/blind-sqli-blacklist', userSession.isAuthenticated, user.searchUserBlackList);
 
-// router.get('/logout', userSession.isAuthenticated, user.logout);
+router.get('/change-password', userSession.isAuthenticated, user.viewChangePassword);
+
+router.post('/change-password', userSession.isAuthenticated, user.changePassword);
 
 module.exports = router;

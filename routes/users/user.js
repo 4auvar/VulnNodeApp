@@ -90,7 +90,7 @@ module.exports = {
     },
     searchUserBlackList: function (req, res) {
         const usersController = new UsersController();
-        // test1%' or '%'='
+        // %' OR '%'='
         usersController.searchUserBlackList(req.body.username)
             .then((htmlResponse) => {
                 return res.render('../views/blind-sqli-blacklist', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, isGetReq: false, htmlResponse: htmlResponse });
@@ -99,10 +99,19 @@ module.exports = {
                 return res.render('../views/blind-sqli-blacklist', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, isGetReq: false, htmlResponse: "" });
             });
     },
-    // logout : function(req,res){
-    //     //req.logout();
-    //     res.redirect('/');
-    // }
+    viewChangePassword: function (req, res) {
+        return res.render('../views/change-password', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, htmlResponse: "" });
+    },
+    changePassword: function (req, res) {
+        const usersController = new UsersController();
+        usersController.changePassword(req.body.password, req.body.id)
+            .then((htmlResponse) => {
+                return res.render('../views/change-password', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, isGetReq: false, htmlResponse: htmlResponse });
+            }).catch((err) => {
+                console.log("err : " + err);
+                return res.render('../views/change-password', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, isGetReq: false, htmlResponse: "" });
+            });
+    }
 }
 
 function renderDashboardView(req, res) {

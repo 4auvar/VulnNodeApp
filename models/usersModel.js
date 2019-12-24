@@ -62,11 +62,26 @@ class UsersModel {
             });
         });
     }
+
+    changePassword(params) {
+        let password = params[0];
+        let userId = params[1];
+        return new Promise((resolve, reject) => {
+            let query = queries.changePassword;
+            executeQueryWithParam(query, [password, userId]).then((result) => {
+                resolve();
+            }).catch((err) => {
+                console.log("error : " + err);
+                reject(err);
+            });
+        });
+    }
 }
 
 const queries = {
     updateUserById: "update users set fullname=?, username=?, email=?, phone=? where id=?",
-    addUser: "insert into users (fullname,username,email,phone,password,profilepic) values(?,?,?,?,?,'/images/user2-160x160.jpg')"
+    addUser: "insert into users (fullname,username,email,phone,password,profilepic) values(?,?,?,?,?,'/images/user2-160x160.jpg')",
+    changePassword: "update users set password=? where id=?"
 }
 
 module.exports = UsersModel;

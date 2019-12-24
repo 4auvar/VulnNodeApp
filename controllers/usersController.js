@@ -76,7 +76,6 @@ class UsersController {
     }
 
     searchUserBlackList(username) {
-        console.log("username :" + username);
         return new Promise((resolve, reject) => {
             let htmlResponse = "";
             if (!isFromBlackListOfSqli(username)) {
@@ -98,6 +97,22 @@ class UsersController {
                 htmlResponse = "<p>Your input contains malicious values, Please try again</p>";
                 return resolve(htmlResponse);
             }
+        });
+    }
+
+    changePassword(password, userId) {
+        return new Promise((resolve, reject) => {
+            let htmlResponse = "";
+            this.usersModel.changePassword([password, userId])
+                .then(() => {
+                    htmlResponse = "<p>Your password successfully changed.";
+                    return resolve(htmlResponse);
+                })
+                .catch((err) => {
+                    htmlResponse = "<p>Something went wrong, Please try again";
+                    return resolve(htmlResponse);
+                });
+
         });
     }
 }
