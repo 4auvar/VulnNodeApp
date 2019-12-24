@@ -12,16 +12,20 @@
                 your language: </a></li>
         <select>
             <script>
-                var lang = document.location.href
-                    .substring(document.location.href
-                        .indexOf("default=") + 8);
+                function getUrlVars() {
+                    var vars = {};
+                    var parts = document.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+                        vars[key] = value;
+                    });
+                    return vars;
+                }
+
+                var lang = getUrlVars()["default"];
                 if ("http://" + lang == document.location.href) {
                     document.write("<OPTION value=1>French</OPTION>");
                 } else {
                     document.write("<OPTION value=1>"
-                        + decodeURIComponent(document.location.href
-                            .substring(document.location.href
-                                .indexOf("default=") + 8))
+                        + decodeURIComponent(lang)
                         + "</OPTION>");
                 }
                 document.write("<OPTION value=2>English</OPTION>");
@@ -77,7 +81,7 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" type="text/javascript"></script>
     <script>
         $('#logout').click(function (e) {
-            e.preventDefault(); 
+            e.preventDefault();
             document.cookie = "connect.sid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
             window.location = "/";
             return false;

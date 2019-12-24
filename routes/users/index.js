@@ -33,4 +33,7 @@ router.get('/command-injection', userSession.isAuthenticated, user.viewCommandIn
 
 router.post('/command-injection', userSession.isAuthenticated, user.commandInjection);
 
+router.get('/arbitrary-file-retrieval', userSession.isAuthenticated, user.arbitraryFileRetrieval);
+
+
 module.exports = router;

@@ -3,7 +3,8 @@ const {
     custom_sanitizer_regex,
     isFromBlackListOfXSS,
     isFromBlackListOfSqli,
-    pingMe
+    pingMe,
+    readDosAndDonts
 } = require('../utils/utility');
 
 class UsersController {
@@ -125,6 +126,22 @@ class UsersController {
         return new Promise((resolve, reject) => {
             let htmlResponse = "";
             pingMe(ip)
+                .then((result) => {
+                    htmlResponse = "<p>" + result + "</p>";
+                    return resolve(htmlResponse);
+                })
+                .catch((err) => {
+                    htmlResponse = "<p>" + err + "</p>";
+                    return reject(htmlResponse);
+                });
+
+        });
+    }
+
+    arbitraryFileRetrieval(filename) {
+        return new Promise((resolve, reject) => {
+            let htmlResponse = "";
+            readDosAndDonts(filename)
                 .then((result) => {
                     htmlResponse = "<p>" + result + "</p>";
                     return resolve(htmlResponse);

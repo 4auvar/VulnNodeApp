@@ -123,6 +123,15 @@ module.exports = {
             }).catch((err) => {
                 return res.render('../views/command-injection', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, htmlResponse: err });
             });
+    },
+    arbitraryFileRetrieval: function (req, res) {
+        const usersController = new UsersController();
+        usersController.arbitraryFileRetrieval(req.query.filename)
+            .then((htmlResponse) => {
+                return res.render('../views/arbitrary-file-retrieval', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, htmlResponse: htmlResponse });
+            }).catch((err) => {
+                return res.render('../views/arbitrary-file-retrieval', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, htmlResponse: err });
+            });
     }
 }
 

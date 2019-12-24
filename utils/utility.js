@@ -72,9 +72,26 @@ function pingMe(ip) {
         });
     });
 }
+
+function readDosAndDonts(filename) {
+    return new Promise((resolve, reject) => {
+        var fs = require('fs');
+        var path = require('path');
+        filePath = path.join(__dirname, filename);
+        fs.readFile(filePath, { encoding: 'utf-8' }, function (err, data) {
+            if (!err) {
+                resolve(data);
+            } else {
+                reject(err);
+            }
+        });
+    });
+
+}
 module.exports = {
     custom_sanitizer_regex: custom_sanitizer_regex,
     isFromBlackListOfXSS: isFromBlackListOfXSS,
     isFromBlackListOfSqli: isFromBlackListOfSqli,
-    pingMe: pingMe
+    pingMe: pingMe,
+    readDosAndDonts: readDosAndDonts
 };
