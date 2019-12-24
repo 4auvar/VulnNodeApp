@@ -88,10 +88,37 @@ function readDosAndDonts(filename) {
     });
 
 }
+
+function searchLogs(search) {
+    return new Promise((resolve, reject) => {
+        let rgx = new RegExp('(public\\[\\d+\\] +.*' + search + '.*)');
+        var fs = require('fs');
+        var path = require('path');
+        filePath = path.join(__dirname, 'customLogs.txt');
+        fs.readFile(filePath, { encoding: 'utf-8' }, function (err, data) {
+            if (!err) {
+                let resp = "";
+                let lines = data.split(/\r\n|\n/);
+                lines.forEach(element => {
+                    if (rgx.test(element)) {
+                        resp += element + "\n";
+                    }
+                });
+                console.log("from utils - resp : " + resp);
+                resolve(resp);
+            } else {
+                console.log("from utils error - : " + err);
+                reject(err);
+            }
+        });
+    });
+}
+
 module.exports = {
     custom_sanitizer_regex: custom_sanitizer_regex,
     isFromBlackListOfXSS: isFromBlackListOfXSS,
     isFromBlackListOfSqli: isFromBlackListOfSqli,
     pingMe: pingMe,
-    readDosAndDonts: readDosAndDonts
+    readDosAndDonts: readDosAndDonts,
+    searchLogs: searchLogs
 };

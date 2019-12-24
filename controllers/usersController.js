@@ -4,7 +4,8 @@ const {
     isFromBlackListOfXSS,
     isFromBlackListOfSqli,
     pingMe,
-    readDosAndDonts
+    readDosAndDonts,
+    searchLogs
 } = require('../utils/utility');
 
 class UsersController {
@@ -148,6 +149,25 @@ class UsersController {
                 })
                 .catch((err) => {
                     htmlResponse = "<p>" + err + "</p>";
+                    return reject(htmlResponse);
+                });
+
+        });
+    }
+
+    regExInjection(search) {
+        // bypass: )|(.*
+        return new Promise((resolve, reject) => {
+            let htmlResponse = "";
+            searchLogs(search)
+                .then((result) => {
+                    htmlResponse = "<p>" + result + "</p>";
+                    console.log("from controller - htmlResponse : " + htmlResponse);
+                    return resolve(htmlResponse);
+                })
+                .catch((err) => {
+                    htmlResponse = "<p>" + err + "</p>";
+                    console.log("from controller error - htmlResponse : " + htmlResponse);
                     return reject(htmlResponse);
                 });
 

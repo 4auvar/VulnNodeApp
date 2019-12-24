@@ -1,0 +1,5 @@
+10:47:03 private[423] Successful logout  name: usr1 ssn: 111223333
+10:47:04 public[48964] Failed to resolve network service
+10:47:04 public[1] (public.message[49367]) Exited with exit code: 255
+10:47:43 private[423] Successful login  name: usr2 ssn: 444556666
+10:48:08 public[48964] Backup failed with error: 19

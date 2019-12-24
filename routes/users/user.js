@@ -132,7 +132,19 @@ module.exports = {
             }).catch((err) => {
                 return res.render('../views/arbitrary-file-retrieval', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, htmlResponse: err });
             });
-    }
+    },
+    viewRegExInjection: function (req, res) {
+        return res.render('../views/regex-injection', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, htmlResponse: "" });
+    },
+    regExInjection: function (req, res) {
+        const usersController = new UsersController();
+        usersController.regExInjection(req.body.search)
+            .then((htmlResponse) => {
+                return res.render('../views/regex-injection', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, htmlResponse: htmlResponse });
+            }).catch((err) => {
+                return res.render('../views/regex-injection', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, htmlResponse: err });
+            });
+    },
 }
 
 function renderDashboardView(req, res) {

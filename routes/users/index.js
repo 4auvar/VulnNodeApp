@@ -35,5 +35,10 @@ router.post('/command-injection', userSession.isAuthenticated, user.commandInjec
 
 router.get('/arbitrary-file-retrieval', userSession.isAuthenticated, user.arbitraryFileRetrieval);
 
+router.get('/regex-injection', userSession.isAuthenticated, user.viewRegExInjection);
+
+router.post('/regex-injection', userSession.isAuthenticated, user.regExInjection);
+
+
 
 module.exports = router;
