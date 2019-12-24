@@ -76,6 +76,7 @@ class UsersModel {
             });
         });
     }
+
 }
 
 const queries = {

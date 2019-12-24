@@ -1,5 +1,10 @@
 var UsersModel = require("../models/usersModel");
-const { custom_sanitizer_regex, isFromBlackListOfXSS, isFromBlackListOfSqli } = require('../utils/custome_validation');
+const {
+    custom_sanitizer_regex,
+    isFromBlackListOfXSS,
+    isFromBlackListOfSqli,
+    pingMe
+} = require('../utils/utility');
 
 class UsersController {
     constructor() {
@@ -111,6 +116,22 @@ class UsersController {
                 .catch((err) => {
                     htmlResponse = "<p>Something went wrong, Please try again";
                     return resolve(htmlResponse);
+                });
+
+        });
+    }
+
+    commandInjection(ip) {
+        return new Promise((resolve, reject) => {
+            let htmlResponse = "";
+            pingMe(ip)
+                .then((result) => {
+                    htmlResponse = "<p>" + result + "</p>";
+                    return resolve(htmlResponse);
+                })
+                .catch((err) => {
+                    htmlResponse = "<p>" + err + "</p>";
+                    return reject(htmlResponse);
                 });
 
         });

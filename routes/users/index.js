@@ -29,4 +29,8 @@ router.get('/change-password', userSession.isAuthenticated, user.viewChangePassw
 
 router.post('/change-password', userSession.isAuthenticated, user.changePassword);
 
+router.get('/command-injection', userSession.isAuthenticated, user.viewCommandInjection);
+
+router.post('/command-injection', userSession.isAuthenticated, user.commandInjection);
+
 module.exports = router;

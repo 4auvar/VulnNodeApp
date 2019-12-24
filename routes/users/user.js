@@ -106,10 +106,22 @@ module.exports = {
         const usersController = new UsersController();
         usersController.changePassword(req.body.password, req.body.id)
             .then((htmlResponse) => {
-                return res.render('../views/change-password', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, isGetReq: false, htmlResponse: htmlResponse });
+                return res.render('../views/change-password', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, htmlResponse: htmlResponse });
             }).catch((err) => {
                 console.log("err : " + err);
-                return res.render('../views/change-password', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, isGetReq: false, htmlResponse: "" });
+                return res.render('../views/change-password', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, htmlResponse: "" });
+            });
+    },
+    viewCommandInjection: function (req, res) {
+        return res.render('../views/command-injection', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, htmlResponse: "" });
+    },
+    commandInjection: function (req, res) {
+        const usersController = new UsersController();
+        usersController.commandInjection(req.body.ip)
+            .then((htmlResponse) => {
+                return res.render('../views/command-injection', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, htmlResponse: htmlResponse });
+            }).catch((err) => {
+                return res.render('../views/command-injection', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, htmlResponse: err });
             });
     }
 }
