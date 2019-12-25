@@ -114,11 +114,30 @@ function searchLogs(search) {
     });
 }
 
+function parseXML(xmlInput) {
+    return new Promise((resolve, reject) => {
+        var libxml = require("libxmljs")
+        var parserOptions = {
+            noblanks: true,
+            noent: true,
+            nocdata: true
+        };
+
+        try {
+            var doc = libxml.parseXmlString(xmlInput, parserOptions);
+            return resolve(doc);
+        } catch (e) {
+            return reject(new Error('Xml parsing error'));
+        }
+    });
+}
+
 module.exports = {
     custom_sanitizer_regex: custom_sanitizer_regex,
     isFromBlackListOfXSS: isFromBlackListOfXSS,
     isFromBlackListOfSqli: isFromBlackListOfSqli,
     pingMe: pingMe,
     readDosAndDonts: readDosAndDonts,
-    searchLogs: searchLogs
+    searchLogs: searchLogs,
+    parseXML: parseXML
 };

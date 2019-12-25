@@ -21,7 +21,7 @@
                 }
 
                 var lang = getUrlVars()["default"];
-                if ("http://" + lang == document.location.href) {
+                if (lang == undefined) {
                     document.write("<OPTION value=1>French</OPTION>");
                 } else {
                     document.write("<OPTION value=1>"

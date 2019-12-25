@@ -5,7 +5,8 @@ const {
     isFromBlackListOfSqli,
     pingMe,
     readDosAndDonts,
-    searchLogs
+    searchLogs,
+    parseXML
 } = require('../utils/utility');
 
 class UsersController {
@@ -171,6 +172,31 @@ class UsersController {
                     return reject(htmlResponse);
                 });
 
+        });
+    }
+
+    xxe(username) {
+        return new Promise((resolve, reject) => {
+            // payload = '<?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE foo [<!ELEMENT user ANY > <!ENTITY xxe SYSTEM "file:///etc/passwd" >]><user>&xxe;</user>';
+            parseXML(username).then((xmlDoc) => {
+                username = xmlDoc.get('/user').text();
+                this.usersModel.searchByName([username])
+                    .then((user) => {
+                        let htmlResponse = "";
+                        if (user != undefined && user != "") {
+                            htmlResponse = generateSearchUserResponse(user)
+                        } else {
+                            htmlResponse = "<p>User " + username + " not present";
+                        }
+
+                        return resolve(htmlResponse);
+                    })
+                    .catch((err) => {
+                        return reject(err);
+                    });
+            }).catch((err) => {
+                return reject(err);
+            });
         });
     }
 }

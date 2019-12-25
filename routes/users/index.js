@@ -39,6 +39,8 @@ router.get('/regex-injection', userSession.isAuthenticated, user.viewRegExInject
 
 router.post('/regex-injection', userSession.isAuthenticated, user.regExInjection);
 
+router.get('/xxe', userSession.isAuthenticated, user.viewXxe);
 
+router.post('/xxe', userSession.isAuthenticated, user.xxe);
 
 module.exports = router;

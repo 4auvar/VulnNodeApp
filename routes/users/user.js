@@ -145,6 +145,18 @@ module.exports = {
                 return res.render('../views/regex-injection', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, htmlResponse: err });
             });
     },
+    viewXxe: function (req, res) {
+        return res.render('../views/xxe', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, htmlResponse: "" });
+    },
+    xxe: function (req, res) {
+        const usersController = new UsersController();
+        usersController.xxe(req.body.search)
+            .then((htmlResponse) => {
+                return res.send(htmlResponse);
+            }).catch((err) => {
+                return res.send(err);
+            });
+    },
 }
 
 function renderDashboardView(req, res) {
