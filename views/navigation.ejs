@@ -24,7 +24,7 @@
                 <!-- Add icons to the links using the .nav-icon class
        with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a href="/" class="nav-link active">
+                    <a href="/" class="menu nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Dashboard
@@ -32,7 +32,7 @@
                     </a>
                 </li>
                 <li class="nav-item has-treeview">
-                    <a href="#" class="nav-link">
+                    <a href="#" class="menu nav-link">
                         <i class="nav-icon fas fa-syringe"></i>
                         <p>
                             SQL Injection
@@ -41,68 +41,148 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="/error-based-sqli?id=<%= id %>&default=English" class="nav-link">
+                            <a href="/error-based-sqli?id=<%= id %>&default=English&page=ebsi" id="ebsi"
+                                class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Error based SQLi</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/blind-sqli?default=English" class="nav-link">
+                            <a href="/blind-sqli?default=English&page=bbsi" id="bbsi" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Blind SQLi</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/second-order-sqli?default=English" class="nav-link">
+                            <a href="/second-order-sqli?default=English&page=sosi" id="sosi" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Second Order SQLi</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/blind-sqli-blacklist?default=English" class="nav-link">
+                            <a href="/blind-sqli-blacklist?default=English&page=exsi" id="exsi" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Challenge - 1</p>
+                                <p>Exercise - 1 SQLi</p>
                             </a>
                         </li>
                     </ul>
                 </li>
+
+
+
+
+                <li class="nav-item has-treeview">
+                    <a href="#" class="menu nav-link">
+                        <i class="nav-icon fas fa-times-circle"></i>
+                        <p>
+                            Cross Site Scripting
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/stored-xss?id=<%= id %>&default=English&page=sxss" id="sxss" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Stored XSS</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/reflected-xss?default=English&page=rxss" id="rxss" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Reflected XSS</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/dom-xss?default=English&page=dxss" id="dxss" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>DOM based XSS</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/xss-exercise?default=English&page=e1xss" id="e1xss" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Exercise - 1 (Reflected XSS)</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/xss-exercise?default=English&page=e2xss" id="e2xss" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Exercise - 2 (Stored XSS)</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 <li class="nav-item">
-                    <a href="/command-injection?default=English" class="nav-link active">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <a href="/idor?id=<%= id %>&default=English&page=idor" id="idor" class=" nav-link ">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>
+                            IDOR
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/command-injection?default=English&page=ci" id="ci" class=" nav-link ">
+                        <i class="nav-icon fas fa-terminal"></i>
                         <p>
                             Command Injection
                         </p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/arbitrary-file-retrieval?default=English&filename=DosAndDonts.txt"
-                        class="nav-link active">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <a href="/arbitrary-file-retrieval?default=English&filename=DosAndDonts.txt&page=arbfr" id="arbfr"
+                        class=" nav-link ">
+                        <i class="nav-icon fas fa-file-export"></i>
                         <p>
                             Arbitrary File Retrieval
                         </p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/regex-injection?default=English" class="nav-link active">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <a href="/regex-injection?default=English&page=ri" id="ri" class=" nav-link ">
+                        <i class="nav-icon fas fa-dollar-sign"></i>
                         <p>
                             RegEx Injection
                         </p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/xxe?default=English" class="nav-link active">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <a href="/xxe?default=English&page=xxe" id="xxe" class=" nav-link ">
+                        <i class="nav-icon fas fa-greater-than"></i>
                         <p>
                             XXE Injection
                         </p>
                     </a>
                 </li>
-
+                <li class="nav-item">
+                    <a href="/deserialization?default=English&page=nodedes" id="nodedes" class=" nav-link ">
+                        <i class="nav-icon fas fa-compress-arrows-alt"></i>
+                        <p>
+                            Node-JS Deserialization
+                        </p>
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
 </aside>
+<script>
+    // Add active class to the current button (highlight it)
+    var btns = document.getElementsByClassName("menu");
+    for (var i = 0; i < btns.length; i++) {
+        btns[i].addEventListener("click", function () {
+            var current = document.getElementsByClassName("menu active");
+            for (var i = 0; i < current.length; i++) {
+                current[i].className = current[i].className.replace(" active", "");
+            }
+            this.className += " active";
+        });
+    }
+
+    var page = getUrlVars()["page"];
+    var btn = document.getElementById(page);
+    btn.className += " active";
+</script>

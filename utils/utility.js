@@ -132,6 +132,23 @@ function parseXML(xmlInput) {
     });
 }
 
+function getDeserializeData(data) {
+    return new Promise((resolve, reject) => {
+        try {
+            var serialize = require('node-serialize');
+            var str = new Buffer(data, 'base64').toString('ascii');
+            var obj = serialize.unserialize(str);
+            if (obj.fullname) {
+                return resolve(obj.fullname);
+            } else {
+                return reject(new Error("User data not found"));
+            }
+        } catch (e) {
+            return reject(e);
+        }
+    });
+}
+
 module.exports = {
     custom_sanitizer_regex: custom_sanitizer_regex,
     isFromBlackListOfXSS: isFromBlackListOfXSS,
@@ -139,5 +156,6 @@ module.exports = {
     pingMe: pingMe,
     readDosAndDonts: readDosAndDonts,
     searchLogs: searchLogs,
-    parseXML: parseXML
+    parseXML: parseXML,
+    getDeserializeData: getDeserializeData
 };

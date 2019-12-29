@@ -1,28 +1,13 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AdminLTE 3 | Project Edit</title>
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- overlayScrollbars -->
-    <link rel="stylesheet" href="/stylesheets/adminlte.min.css">
-    <!-- Google Font: Source Sans Pro -->
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-</head>
+<% include header.ejs %>
 
 <body class="hold-transition sidebar-mini">
     <!-- Site wrapper -->
     <div class="wrapper">
         <!-- Navbar -->
-        <% include header.ejs %>
+        <% include body-header.ejs %>
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
@@ -35,7 +20,7 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>XML External Entity Injection</h1>
+                            <h1>XXE Injection</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
@@ -53,7 +38,7 @@
                     <div class="col-md-8">
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h3 class="card-title">XXE Injection</h3>
+                                <h3 class="card-title">Search User</h3>
                             </div>
 
                             <form id="xxeForm" method="post">
@@ -61,7 +46,7 @@
 
                                     <div class="form-group has-feedback">
                                         <input type="text" name="search" id="search" class="form-control"
-                                            placeholder="Search log">
+                                            placeholder="Username">
                                         <span class="glyphicon glyphicon-user form-control-feedback"></span>
                                     </div>
                                 </div>
@@ -116,7 +101,7 @@
         $("#xxeForm").submit(function (event) {
             event.preventDefault();
             let uName = '<user>' + $("#search").val() + '</user>';
-            
+
             $.post("/xxe?defaule=English", { search: uName }, function (data) {
                 $("#responseBody").html(data);
             });

@@ -15,7 +15,7 @@ module.exports = {
                         return res.render("index", { message: "Invalid username or password!!" });
                     }
                     req.session.ROLE = user.role_id;
-                    console.log("req.user : " + JSON.stringify(req.user));
+                    setProfileCookie(req, res);
                     return renderDashboardView(req, res);
                 });
             }
@@ -38,7 +38,6 @@ module.exports = {
     },
     updateProfile: function (req, res, next) {
         const usersController = new UsersController();
-        console.log("user.id : " + req.query.id);
         usersController.updateUserById(req.body, req.query.id)
             .then(() => {
                 res.redirect("/error-based-sqli?id=" + req.query.id + "&default=English")
@@ -99,6 +98,22 @@ module.exports = {
                 return res.render('../views/blind-sqli-blacklist', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, isGetReq: false, htmlResponse: "" });
             });
     },
+
+    viewReflectedXSS: function (req, res) {
+        return res.render('../views/reflected-xss', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, isGetReq: true, htmlResponse: "" });
+    },
+    reflectedXSS: function (req, res) {
+        const usersController = new UsersController();
+        usersController.searchUserBlackList(req.body.username)
+            .then((htmlResponse) => {
+                return res.render('../views/reflected-xss', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, isGetReq: false, htmlResponse: htmlResponse });
+            }).catch((err) => {
+                console.log("err : " + err);
+                return res.render('../views/reflected-xss', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, isGetReq: false, htmlResponse: "" });
+            });
+    },
+
+
     viewChangePassword: function (req, res) {
         return res.render('../views/change-password', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, htmlResponse: "" });
     },
@@ -157,6 +172,56 @@ module.exports = {
                 return res.send(err);
             });
     },
+    viewDeserialization: function (req, res) {
+        const usersController = new UsersController();
+        usersController.deserialization(req.cookies)
+            .then((htmlResponse) => {
+                return res.render('../views/deserialization', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, htmlResponse: htmlResponse });
+            }).catch((err) => {
+                return res.render('../views/deserialization', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, htmlResponse: err });
+            });
+    },
+
+    storedXSS: function (req, res) {
+        return res.render('../views/stored-xss', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, htmlResponse: "" });
+    },
+    domXSS: function (req, res) {
+        return res.render('../views/dom-xss', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, htmlResponse: "" });
+    },
+    viewXssExercise: function (req, res) {
+        return res.render('../views/xss-exercise', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, isGetReq: true, htmlResponse: "" });
+    },
+    xssExercise: function (req, res) {
+        const usersController = new UsersController();
+        usersController.searchByName(req.body.username)
+            .then((htmlResponse) => {
+                return res.render('../views/xss-exercise', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, isGetReq: false, htmlResponse: htmlResponse });
+            }).catch((err) => {
+                console.log("err : " + err);
+                return res.render('../views/xss-exercise', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, isGetReq: false, htmlResponse: "" });
+            });
+    },
+    idorViewProfile: function (req, res, next) {
+        getUser(req.query.id)
+            .then((user) => {
+                if (user != undefined) {
+                    return res.render('../views/idor', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, userDetails: user });
+                } else {
+                    return res.render('../views/idor', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, userDetails: undefined });
+                }
+            }).catch((err) => {
+                return res.send(err);
+            });
+    },
+    idorUpdateProfile: function (req, res, next) {
+        const usersController = new UsersController();
+        usersController.updateUserById(req.body, req.query.id)
+            .then(() => {
+                res.redirect("/idor?id=" + req.query.id + "&default=English&page=idor")
+            }).catch((err) => {
+                return res.send(err);
+            });
+    }
 }
 
 function renderDashboardView(req, res) {
@@ -168,3 +233,13 @@ function getUser(id) {
     return usersController.findUserById(id);
 }
 
+function setProfileCookie(req, res) {
+    let userCookie = '{"id":"' + req.user.id + '","fullname" : "' + req.user.fullname + '"}';
+    let buff = new Buffer(userCookie);
+    let base64data = buff.toString('base64');
+    console.log("base64data : " + base64data);
+    res.cookie('user', base64data, {
+        maxAge: 900000,
+        httpOnly: true
+    });
+}

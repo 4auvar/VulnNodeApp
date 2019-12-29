@@ -13,8 +13,10 @@
     "express": "~4.16.1",
     "express-session": "^1.17.0",
     "http-errors": "~1.6.3",
+    "libxmljs": "^0.19.7",
     "morgan": "~1.9.1",
     "mysql": "^2.17.1",
+    "node-serialize": "0.0.4",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0"
   }

@@ -25,6 +25,22 @@ router.get('/blind-sqli-blacklist', userSession.isAuthenticated, user.blindSqliB
 
 router.post('/blind-sqli-blacklist', userSession.isAuthenticated, user.searchUserBlackList);
 
+router.get('/stored-xss', userSession.isAuthenticated, user.storedXSS);
+
+router.get('/dom-xss', userSession.isAuthenticated, user.domXSS);
+
+router.get('/reflected-xss', userSession.isAuthenticated, user.viewReflectedXSS);
+
+router.post('/reflected-xss', userSession.isAuthenticated, user.reflectedXSS);
+
+router.get('/xss-exercise', userSession.isAuthenticated, user.viewXssExercise);
+
+router.post('/xss-exercise', userSession.isAuthenticated, user.xssExercise);
+
+router.get('/idor', userSession.isAuthenticated, user.idorViewProfile);
+
+router.post('/idor', userSession.isAuthenticated, user.idorUpdateProfile);
+
 router.get('/change-password', userSession.isAuthenticated, user.viewChangePassword);
 
 router.post('/change-password', userSession.isAuthenticated, user.changePassword);
@@ -42,5 +58,10 @@ router.post('/regex-injection', userSession.isAuthenticated, user.regExInjection
 router.get('/xxe', userSession.isAuthenticated, user.viewXxe);
 
 router.post('/xxe', userSession.isAuthenticated, user.xxe);
+
+router.get('/deserialization', userSession.isAuthenticated, user.viewDeserialization);
+
+
+
 
 module.exports = router;

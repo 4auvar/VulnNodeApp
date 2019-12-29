@@ -20,12 +20,12 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Blind SQL Injection</h1>
+                            <h1>DOM based XSS</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active">Blind SQL Injection</li>
+                                <li class="breadcrumb-item active">DOM based XSS</li>
                             </ol>
                         </div>
                     </div>
@@ -38,35 +38,15 @@
                     <div class="col-md-8">
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h3 class="card-title">Search User</h3>
+                                <h3 class="card-title">Instruction</h3>
                             </div>
-
-                            <form action="./blind-sqli?default=English" method="post">
-                                <div class="card-body">
-
-                                    <div class="form-group has-feedback">
-                                        <input type="text" name="username" class="form-control" placeholder="User name">
-                                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                                    </div>
-                                </div>
-                                <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary">Search</button>
-                                    <a href="/" class="btn btn-secondary">Cancel</a>
-                                </div>
-                                <!-- /.col -->
-                            </form>
+                            <div class="card-body">
+                                <p><b>- Observe the "default" parameter in the URL</b></p>
+                                <p><b>- Try DOM based XSS there</b></p>
+                            </div>
                         </div>
                         <!-- /.card -->
                     </div>
-                </div>
-                <div class="row">
-                    <% if (isGetReq != true) { %>
-
-                    <%- htmlResponse %>
-
-                    <% } %>
-
-
                 </div>
             </section>
             <!-- /.content -->

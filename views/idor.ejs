@@ -20,12 +20,12 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Error Based SQLi</h1>
+                            <h1>Insecure Direct Object Reference</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="/">Home</a></li>
-                                <li class="breadcrumb-item active">Error Based SQLi</li>
+                                <li class="breadcrumb-item active">Insecure Direct Object Reference</li>
                             </ol>
                         </div>
                     </div>
@@ -46,7 +46,7 @@
                             </div>
 
                             <% if(userDetails != undefined) { %>
-                            <form action="/update-profile?id=<%= id %>" method="POST">
+                            <form action="/idor?id=<%= userDetails.id %>" method="POST">
                                 <div class="card-body">
 
                                     <div class="form-group">
