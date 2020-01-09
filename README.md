@@ -1,5 +1,5 @@
 # VulnNodeApp
-A vulnerable application made using node.js, express server and ejs template engine. This application is meant for educational purpose only. 
+A vulnerable application made using node.js, express server and ejs template engine. This application is meant for educational purposes only. 
 
 # Setup
 ## Clone this repository
@@ -9,7 +9,7 @@ git clone https://github.com/4auvar/VulnNodeApp.git
 ```
 
 ## Application setup:
-- Install latest node.js version with npm.
+- Install the latest node.js version with npm.
 - Open terminal/command prompt and navigate to the location of downloaded/cloned repository.
 - Run command: `npm install`
  
@@ -31,7 +31,7 @@ insert into users(fullname,username,password,email,phone) values("test5","test5"
 ```
 
 ## Set basic environment variable
-- User need to set below environment variable.
+- User needs to set the below environment variable.
     * DATABASE_HOST (E.g: localhost, 127.0.0.1, etc...)
     * DATABASE_NAME (E.g: vuln_node_app_db or DB name you change in above DB script)
     * DATABASE_USER (E.g: vulnnodeapp or user name you change in above DB script)
@@ -61,8 +61,8 @@ insert into users(fullname,username,password,email,phone) values("test5","test5"
 # Issues
 - In case of bugs in the application, feel free to create an [issues](https://github.com/4auvar/VulnNodeApp/issues) on github.
 
-# Contributation
-- Feel free to create a pull request for any contributation.
+# Contribution
+- Feel free to create a pull request for any contribution.
 
 
-You can reach me at [Gaurav Nayak](https://github.com/4auvar) or DM me at [@4auvar](https://twitter.com/4auvar)
+You can contact me at [@4auvar](https://twitter.com/4auvar)
