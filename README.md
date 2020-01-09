@@ -65,4 +65,4 @@ insert into users(fullname,username,password,email,phone) values("test5","test5"
 - Feel free to create a pull request for any contribution.
 
 
-You can contact me at [@4auvar](https://twitter.com/4auvar)
+You can reach me out at [@4auvar](https://twitter.com/4auvar)
