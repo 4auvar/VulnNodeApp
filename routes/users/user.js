@@ -221,7 +221,10 @@ module.exports = {
             }).catch((err) => {
                 return res.send(err);
             });
-    }
+    },
+    sessionMgmt: function (req, res) {
+        return res.render('../views/session-mgmt', { id: req.user.id, fullName: req.user.fullname, profilePic: req.user.profilepic, htmlResponse: "" });
+    },
 }
 
 function renderDashboardView(req, res) {
@@ -237,7 +240,7 @@ function setProfileCookie(req, res) {
     let userCookie = '{"id":"' + req.user.id + '","fullname" : "' + req.user.fullname + '"}';
     let buff = new Buffer(userCookie);
     let base64data = buff.toString('base64');
-    console.log("base64data : " + base64data);
+    
     res.cookie('user', base64data, {
         maxAge: 900000,
         httpOnly: true

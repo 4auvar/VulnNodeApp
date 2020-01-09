@@ -61,7 +61,7 @@ router.post('/xxe', userSession.isAuthenticated, user.xxe);
 
 router.get('/deserialization', userSession.isAuthenticated, user.viewDeserialization);
 
-
+router.get('/session-mgmt', userSession.isAuthenticated, user.sessionMgmt);
 
 
 module.exports = router;
