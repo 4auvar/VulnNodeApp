@@ -7,4 +7,4 @@ jobs:
     name: build-and-deploy-app
     steps:
       - name: first-step
-        run: echo 'HELLO'
+        run: ssh 
