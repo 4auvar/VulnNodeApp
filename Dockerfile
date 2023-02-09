@@ -5,4 +5,5 @@ ENV WORKDIR /opt/vuln-node-app
 WORKDIR $WORKDIR
 RUN COPY . $WORKDIR
 RUN npm install
+EXPOSE 3000
 CMD ["npm", "start"]
