@@ -10,7 +10,7 @@
     "csurf": "^1.10.0",
     "debug": "~2.6.9",
     "ejs": "~2.6.1",
-    "express": "~4.16.1",
+    "express": "~4.4.5",
     "express-session": "^1.17.0",
     "http-errors": "~1.6.3",
     "libxmljs": "^0.19.7",
